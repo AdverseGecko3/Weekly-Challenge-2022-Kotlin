@@ -22,24 +22,18 @@ import kotlin.math.pow
  */
 
 fun main() {
-    println(isArmstrong(371))
-    println(isArmstrong(-371))
-    println(isArmstrong(372))
-    println(isArmstrong(0))
+    println(isArmstrong(1))
+    println(isArmstrong(153))
+    println(isArmstrong(54748))
+    println(isArmstrong(1741725))
+    println(isArmstrong(534494836))
 }
 
-private fun isArmstrong(number: Int): Boolean {
-
-    return if (number < 0) {
-        false
-    } else {
-        var sum = 0
-        val powValue = number.toString().length
-
-        number.toString().forEach { character ->
-            sum += character.toString().toDouble().pow(powValue).toInt()
-        }
-
-        number == sum
+fun isArmstrong(number: Int): Boolean {
+    var total = 0
+    for (currentNum in number.toString().toCharArray()) {
+        val num = currentNum.toString().toDouble().pow(number.toString().length).toInt()
+        total += num
     }
+    return number == total
 }
