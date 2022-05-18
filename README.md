@@ -36,10 +36,7 @@ Existen repositorios de código tanto para Kotlin/Android como para Swift/iOS en
 * **#15** - 11/04/22 - `¿CUÁNTOS DÍAS?`
 * **#16** - 18/04/22 - `EN MAYÚSCULA`
 * **#17** - 25/04/22 - `LA CARRERA DE OBSTÁCULOS`
-* **#18** - 02/05/22 - `TRES EN RAYA`
-* **#19** - 09/05/22 - `CONVERSOR TIEMPO`
-* **#20** - 16/05/22 - `PARANDO EL TIEMPO`
-* **#21** - 23/05/22 - `Publicación nuevo reto...`
+* **#18** - 02/05/22 - `Publicación nuevo reto...`
 
 ### ¿Cómo puedo participar?
 
