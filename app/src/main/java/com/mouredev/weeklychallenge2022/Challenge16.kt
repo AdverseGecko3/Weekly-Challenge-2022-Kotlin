@@ -20,18 +20,27 @@ package com.mouredev.weeklychallenge2022
  */
 
 fun main() {
-    println(capitalize("¿hola qué tal estás?"))
-    println(capitalize("¿hola      qué tal estás?"))
-    println(capitalize("El niño ñoño"))
+    println(capitalizeEveryWord("hola soy eric."))
+    println(capitalizeEveryWord("hoy hace 18 grados, y está nublado."))
+    println(capitalizeEveryWord(" ola ,soi josepo , Y no se escrivir . "))
 }
 
-private fun capitalize(text: String): String {
-
-    var capitalizedText = text
-
-    text.replace("[^A-zÀ-ú]".toRegex(), " ").split(" ").forEach { word ->
-        capitalizedText = capitalizedText.replace(word, word.replaceFirstChar { it.uppercase() })
+fun capitalizeEveryWord(phrase: String): String {
+    var charIsSpace = true
+    var newString = ""
+    phrase.forEach {
+        if (it.isWhitespace()) {
+            charIsSpace = true
+            newString += it
+            return@forEach
+        }
+        if (charIsSpace) {
+            newString += it.uppercase()
+            if (Regex("\\p{Punct}").matches(it.toString())) return@forEach
+            charIsSpace = false
+            return@forEach
+        }
+        newString += it
     }
-
-    return capitalizedText
+    return newString
 }
