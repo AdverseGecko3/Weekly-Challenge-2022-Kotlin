@@ -1,5 +1,7 @@
 package com.mouredev.weeklychallenge2022
 
+import java.io.Serializable
+
 /*
  * Reto #25
  * PIEDRA, PAPEL, TIJERA
@@ -22,55 +24,80 @@ package com.mouredev.weeklychallenge2022
  */
 
 fun main() {
-    println(rockScissorsPaper(arrayListOf(Pair(Move.ROCK, Move.ROCK))))
-    println(rockScissorsPaper(arrayListOf(Pair(Move.ROCK, Move.SCISSORS))))
-    println(rockScissorsPaper(arrayListOf(Pair(Move.PAPER, Move.SCISSORS))))
-    println(rockScissorsPaper(arrayListOf(
-        Pair(Move.ROCK, Move.ROCK),
-        Pair(Move.SCISSORS, Move.SCISSORS),
-        Pair(Move.PAPER, Move.PAPER))))
-    println(rockScissorsPaper(arrayListOf(
-        Pair(Move.ROCK, Move.SCISSORS),
-        Pair(Move.SCISSORS, Move.PAPER),
-        Pair(Move.SCISSORS, Move.ROCK))))
-    println(rockScissorsPaper(arrayListOf(
-        Pair(Move.ROCK, Move.PAPER),
-        Pair(Move.SCISSORS, Move.ROCK),
-        Pair(Move.PAPER, Move.SCISSORS))))
+    rockPaperScissors(rpsList())
 }
 
-enum class Move {
-    ROCK, SCISSORS, PAPER
+private enum class RPSValue {
+    R, P, S
 }
 
-private fun rockScissorsPaper(games: List<Pair<Move, Move>>): String {
+private fun rpsList(): List<Pair<RPSValue, RPSValue>> {
+    val list = mutableListOf<Pair<RPSValue, RPSValue>>()
+    (0..10).forEach { _ ->
+        list.add(Pair(RPSValue.values().random(), RPSValue.values().random()))
+    }
+    return list
+}
 
-    var playerOneGames = 0
-    var playerTwoGames = 0
-
-    games.forEach { game ->
-
-        val playerOneMove = game.first
-        val playerTwoMove = game.second
-
-        if (playerOneMove != playerTwoMove) {
-
-            if (playerOneMove == Move.ROCK && playerTwoMove == Move.SCISSORS
-                || playerOneMove == Move.SCISSORS && playerTwoMove == Move.PAPER
-                || playerOneMove == Move.PAPER && playerTwoMove == Move.ROCK) {
-
-                playerOneGames += 1
-            } else {
-                playerTwoGames += 1
+private fun rockPaperScissors(listOf: List<Pair<RPSValue, RPSValue>>) {
+    var player1Wins = 0
+    var player2Wins = 0
+    listOf.forEach { pair ->
+        print("${pair.first} vs ${pair.second} - ")
+        when (pair.first) {
+            RPSValue.R -> {
+                when (pair.second) {
+                    RPSValue.R -> {
+                        println("Tie")
+                    }
+                    RPSValue.P -> {
+                        println("Player 2 wins the round")
+                        player2Wins++
+                    }
+                    RPSValue.S -> {
+                        println("Player 1 wins the round")
+                        player1Wins++
+                    }
+                }
+            }
+            RPSValue.P -> {
+                when (pair.second) {
+                    RPSValue.R -> {
+                        println("Player 1 wins the round")
+                        player1Wins++
+                    }
+                    RPSValue.P -> {
+                        println("Tie")
+                    }
+                    RPSValue.S -> {
+                        println("Player 2 wins the round")
+                        player2Wins++
+                    }
+                }
+            }
+            RPSValue.S -> {
+                when (pair.second) {
+                    RPSValue.R -> {
+                        println("Player 2 wins the round")
+                        player2Wins++
+                    }
+                    RPSValue.P -> {
+                        println("Player 1 wins the round")
+                        player1Wins++
+                    }
+                    RPSValue.S -> {
+                        println("Tie")
+                    }
+                }
             }
         }
     }
 
-    return if (playerOneGames == playerTwoGames) {
-        "Tie"
-    } else if (playerOneGames > playerTwoGames) {
-        "Player 1"
+    if (player1Wins > player2Wins) {
+        println("Player 1 wins the game!")
+    } else if (player1Wins < player2Wins) {
+        println("Player 2 wins the game!")
     } else {
-        "Player 2"
+        println("Tied game!")
     }
 }
