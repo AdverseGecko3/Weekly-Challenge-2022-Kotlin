@@ -27,28 +27,34 @@ package com.mouredev.weeklychallenge2022
  */
 
 fun main() {
-    drawFrame("¿Qué te parece el reto?")
-    drawFrame("¿Qué te     parece el reto?")
-    drawFrame("¿Cuántos retos de código de la comunidad has resuelto?")
+    drawFrame("Buenos días señor Wayne")
+    drawFrame("Hace muchísimo calor, pero aguantamos")
+    drawFrame("Mi hype por el nuevo álbum de Slipknot está por las nubes!!")
 }
 
-private fun drawFrame(text: String) {
-
-    val words = text.split(" ")
-    var maxLength = 0
+fun drawFrame(phrase: String) {
+    var longestWord = 0
+    val words = phrase.split(" ")
     words.forEach { word ->
-        if (word.length > maxLength) {
-            maxLength = word.length
-        }
+        if (word.length > longestWord) longestWord = word.length
     }
-
-    println("*".repeat(maxLength + 4))
-
-    words.forEach { word ->
-        if (word.isNotEmpty()) {
-            println("* $word${" ".repeat(maxLength - word.length)} *")
+    (0..words.size + 1).forEach { index ->
+        if (index == 0 || index == words.size + 1) {
+            repeat(longestWord + 4) { print("*") }
+        } else {
+            val spaces = longestWord - words[index - 1].length
+            StringBuilder().apply {
+                append("* ")
+                append(words[index - 1])
+                repeat(spaces) {
+                    append(" ")
+                }
+                append(" *")
+                print(this)
+            }
         }
+        println()
     }
-
-    println("*".repeat(maxLength + 4))
 }
+
+
