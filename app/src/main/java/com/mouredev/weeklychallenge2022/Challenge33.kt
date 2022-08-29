@@ -23,27 +23,50 @@ package com.mouredev.weeklychallenge2022
  */
 
 fun main() {
-    println(chineseZodiac(1924))
-    println(chineseZodiac(1946))
-    println(chineseZodiac(1984))
-    println(chineseZodiac(604))
-    println(chineseZodiac(603))
-    println(chineseZodiac(1987))
-    println(chineseZodiac(2022))
+    println("1734 -> ${calculateCycle(1734)}")
+    println("1949 -> ${calculateCycle(1949)}")
+    println("1984 -> ${calculateCycle(1984)}")
+    println("2022 -> ${calculateCycle(2022)}")
+    println("2167 -> ${calculateCycle(2167)}")
 }
 
-private fun chineseZodiac(year: Int) : String {
+enum class ZodiacSigns {
+    RAT, OX, TIGER, RABBIT, DRAGON, SNAKE, HORSE, SHEEP, MONKEY, ROOSTER, DOG, PIG
+}
 
-    val elements = arrayListOf<String>("madera", "fuego", "tierra", "metal", "agua")
-    val animals = arrayListOf<String>("rata", "buey", "tigre", "conejo", "dragón", "serpiente", "caballo", "oveja", "mono", "gallo", "perro", "cerdo")
+enum class Elements {
+    WOOD, FIRE, EARTH, METAL, WATER
+}
 
-    if (year < 604) {
-        return "El ciclo sexagenario comenzó en el año 604."
+fun calculateCycle(year: Int): Pair<ZodiacSigns, Elements> {
+    var start = 1984
+    if (year < start) {
+        while (year < start) {
+            start -= 60
+        }
+    }
+    if (year > start) {
+        while (year > start + 60) {
+            start += 60
+        }
     }
 
-    val sexagenaryYear = (year - 4) % 60
-    val element = elements[(sexagenaryYear % 10) / 2]
-    val animal = animals[sexagenaryYear % 12]
+    val yearsDiff = year - start
 
-    return "$year: $element $animal"
+    val zodiacSignsSize = ZodiacSigns.values().size
+    var yearsZodiacDiff = yearsDiff
+    while (yearsZodiacDiff > zodiacSignsSize) {
+        yearsZodiacDiff -= zodiacSignsSize
+    }
+    val zodiacSign = ZodiacSigns.values()[yearsZodiacDiff]
+
+
+    val elementsSize = Elements.values().size * 2
+    var yearElementsDiff = yearsDiff
+    while (yearElementsDiff >= elementsSize) {
+        yearElementsDiff -= elementsSize
+    }
+    val elementSign = Elements.values()[yearElementsDiff / 2]
+
+    return Pair(zodiacSign, elementSign)
 }
