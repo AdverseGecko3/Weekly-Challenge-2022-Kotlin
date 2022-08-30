@@ -19,3 +19,43 @@ package com.mouredev.weeklychallenge2022
  *
  */
 
+fun main() {
+    try {
+        println(missingNumbers(listOf(0, 1, 4, 5, 7, 9, 13)))
+        println(missingNumbers(listOf(13, 9, 7, 5, 4, 1, 0)))
+    } catch (e: ArrayNotSortedException) {
+        println(e.message)
+    }
+}
+
+private fun missingNumbers(givenList: List<Int>): List<Int> {
+    var sortType = 0
+    if (givenList.zipWithNext().all { it.first < it.second }) {
+        sortType = 1
+    }
+    if (givenList.zipWithNext().all { it.first > it.second }) {
+        sortType = 2
+    }
+    if (sortType == 0) {
+        throw ArrayNotSortedException()
+    }
+
+    val missingNumbers = mutableListOf<Int>()
+    if (sortType == 1) {
+        (givenList.first()..givenList.last()).forEach { num ->
+            if (!givenList.contains(num)) {
+                missingNumbers.add(num)
+            }
+        }
+    } else {
+        (givenList.first() downTo givenList.last()).forEach { num ->
+            if (!givenList.contains(num)) {
+                missingNumbers.add(num)
+            }
+        }
+    }
+    return missingNumbers
+}
+
+class ArrayNotSortedException(message: String = "ERROR: The given array is not sorted!") :
+    Exception(message)
