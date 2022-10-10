@@ -23,5 +23,44 @@ package com.mouredev.weeklychallenge2022
  *
  */
 
+fun main() {
+    println(quickSort(listOf(3, 5, 6, 7, 8, 2, 4, 9, 1)))
+}
 
+private fun quickSort(numberList: List<Int>): List<Int> {
+    return if (numberList.size < 2) {
+        numberList
+    } else {
+        calculateQuickSort(numberList.toMutableList(), 0, numberList.lastIndex)
+    }
+}
 
+fun calculateQuickSort(numberList: MutableList<Int>, first: Int, last: Int): MutableList<Int> {
+    var i = first
+    var j = last
+    var array = numberList
+    val pivot = (array[i] + array[j]) / 2
+
+    while (i < j) {
+        while (array[i] < pivot) {
+            i += 1
+        }
+        while (array[j] > pivot) {
+            j -= 1
+        }
+        if (i <= j) {
+            val x = array[j]
+            array[j] = array[i]
+            array[i] = x
+            i += 1
+            j -= 1
+        }
+    }
+    if (first < j) {
+        array = calculateQuickSort(array, first, j)
+    }
+    if (last > i) {
+        array = calculateQuickSort(array, i, last)
+    }
+    return array
+}
